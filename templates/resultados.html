@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d97706;
+            padding: 30px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        h1 { color: white; margin: 0; font-size: 22px; }
+        .logout {
+            background: #92400e;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .logout:hover { background: #78350f; }
+        .busca {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        input[type=text] {
+            padding: 10px;
+            flex: 1;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+        }
+        .btn-buscar {
+            padding: 10px 20px;
+            background: #92400e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .btn-buscar:hover { background: #78350f; }
+        .mensagem {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 15px;
+        }
+        .card-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .card-info { flex: 1; }
+        .nome {
+            font-size: 17px;
+            font-weight: bold;
+            color: #333;
+        }
+        .info {
+            color: #666;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .badge-situacao {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 6px;
+        }
+        .experiente { background: #d1fae5; color: #065f46; }
+        .cursando { background: #dbeafe; color: #1e40af; }
+        .sem_experiencia { background: #fef3c7; color: #92400e; }
+        .card-acoes {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .btn-curriculo {
+            display: inline-block;
+            padding: 7px 14px;
+            background: #1d4ed8;
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-curriculo:hover { background: #1e40af; }
+        .btn-sem-curriculo {
+            display: inline-block;
+            padding: 7px 14px;
+            background: #e5e7eb;
+            color: #9ca3af;
+            border-radius: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .btn-convocar {
+            display: inline-block;
+            padding: 7px 14px;
+            background: #16a34a;
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-convocar:hover { background: #15803d; }
+        .btn-excluir {
+            display: inline-block;
+            padding: 7px 14px;
+            background: #dc2626;
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-excluir:hover { background: #b91c1c; }
+        .card-rodape {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .score { font-size: 20px; color: #d97706; }
+        .score-num {
+            font-size: 13px;
+            color: #888;
+            margin-left: 4px;
+        }
+        .badge-novo {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .btn-avaliar {
+            display: inline-block;
+            padding: 7px 16px;
+            background: #d97706;
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .btn-avaliar:hover { background: #b45309; }
+        .btn-reavaliar {
+            display: inline-block;
+            padding: 7px 16px;
+            background: #92400e;
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .btn-reavaliar:hover { background: #78350f; }
+        .vazio {
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topo">
+        <h1>🔍 Buscar Freelancer</h1>
+        <a class="logout" href="/logout">Sair</a>
+    </div>
+
+    <form class="busca" action="/buscar" method="GET">
+        <input type="text" name="profissao" placeholder="Ex: Nutricionista, Personal..." value="{{ profissao }}">
+        <button class="btn-buscar" type="submit">Buscar</button>
+    </form>
+
+    {% if mensagem %}
+    <div class="mensagem">✅ {{ mensagem }}</div>
+    {% endif %}
+
+    {% if resultados %}
+        {% for r in resultados %}
+        <div class="card">
+            <div class="card-topo">
+                <div class="card-info">
+                    <div class="nome">{{ r[0] }}</div>
+                    <div class="info">{{ r[1] }} — {{ r[2] }}</div>
+                    <div class="info">📞 {{ r[3] }}</div>
+                    {% if r[7] == 'experiente' %}
+                        <span class="badge-situacao experiente">✅ Com experiência</span>
+                    {% elif r[7] == 'cursando' %}
+                        <span class="badge-situacao cursando">🎓 Cursando</span>
+                    {% elif r[7] == 'sem_experiencia' %}
+                        <span class="badge-situacao sem_experiencia">🌱 Sem experiência</span>
+                    {% endif %}
+                </div>
+                <div class="card-acoes">
+                    {% if r[6] %}
+                    <a class="btn-curriculo" href="/static/curriculos/{{ r[6] }}" target="_blank">📄 Currículo</a>
+                    {% else %}
+                    <span class="btn-sem-curriculo">📄 Sem currículo</span>
+                    {% endif %}
+                    <a class="btn-convocar" href="/convocar/{{ r[5] }}">✉️ Convocar</a>
+                    <a class="btn-excluir" href="/excluir/{{ r[5] }}" onclick="return confirm('Tem certeza que deseja excluir {{ r[0] }}?')">🗑️ Excluir</a>
+                </div>
+            </div>
+
+            <div class="card-rodape">
+                {% if r[4] == 5.0 %}
+                    <span class="badge-novo">🆕 Sem avaliações ainda</span>
+                    <a class="btn-avaliar" href="/avaliar/{{ r[5] }}">⭐ Avaliar</a>
+                {% else %}
+                    <div class="score">
+                        {% set meias = r[4] / 2 %}
+                        {% set cheias = meias | int %}
+                        {% for i in range(cheias) %}★{% endfor %}
+                        {% if meias - cheias >= 0.5 %}½{% endif %}
+                        <span class="score-num">({{ r[4] }})</span>
+                    </div>
+                    <a class="btn-reavaliar" href="/avaliar/{{ r[5] }}">🔄 Reavaliar</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="vazio">Nenhum freelancer encontrado.</p>
+    {% endif %}
+</body>
+</html>

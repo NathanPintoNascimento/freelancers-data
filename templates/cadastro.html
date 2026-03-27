@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro Freelancer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d97706;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        h1 { color: white; margin-bottom: 20px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
+        }
+        .secao {
+            font-size: 12px;
+            font-weight: bold;
+            color: #d97706;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 20px 0 10px;
+            padding-top: 16px;
+            border-top: 1px solid #f3f4f6;
+        }
+        .secao:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        label { font-size: 14px; color: #555; display: block; margin-bottom: 4px; }
+        input[type=text],
+        input[type=email],
+        input[type=file],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            color: #333;
+        }
+        input[type=file] { padding: 8px; }
+        .situacao-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .situacao-opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .situacao-opcao:hover {
+            border-color: #d97706;
+            background: #fffbeb;
+        }
+        .situacao-opcao input[type=radio] {
+            width: auto;
+            margin: 0;
+            padding: 0;
+            accent-color: #d97706;
+        }
+        .situacao-opcao .opcao-texto {
+            display: flex;
+            flex-direction: column;
+        }
+        .opcao-titulo {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+        .opcao-desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .check-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        .check-group input[type=checkbox] {
+            width: auto;
+            margin: 3px 0 0;
+            accent-color: #d97706;
+        }
+        .check-group label {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+        button {
+            width: 100%;
+            padding: 13px;
+            background-color: #d97706;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        button:hover { background-color: #b45309; }
+        .voltar {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .sucesso {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <a class="voltar" href="/">← Voltar</a>
+    <h1>📋 Cadastro de Freelancer</h1>
+    <div class="card">
+        {% if sucesso %}
+        <p class="sucesso">✅ Cadastro realizado com sucesso!</p>
+        {% endif %}
+
+        <form action="/cadastrar" method="POST" enctype="multipart/form-data">
+
+            <p class="secao">Dados pessoais</p>
+
+            <label>Nome completo</label>
+            <input type="text" name="nome" placeholder="Ex: Ana Lima" required>
+
+            <label>Profissão</label>
+            <select name="profissao" required>
+                <option value="" disabled selected>Selecione...</option>
+                <option>Nutricionista</option>
+                <option>Personal Trainer</option>
+                <option>Psicólogo</option>
+                <option>Enfermeiro</option>
+                 <option>Bombeiro</option>
+                <option>Cuidador de Idosos</option>
+            </select>
+
+            <label>Cidade</label>
+            <input type="text" name="cidade" placeholder="Ex: São Paulo" required>
+
+            <label>Telefone / WhatsApp</label>
+            <input type="text" name="telefone" placeholder="Ex: 11999990001" required>
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Ex: ana@email.com" required>
+
+            <p class="secao">Situação profissional</p>
+
+            <div class="situacao-grupo">
+                <label class="situacao-opcao">
+                    <input type="radio" name="situacao" value="experiente" required>
+                    <div class="opcao-texto">
+                        <span class="opcao-titulo">✅ Tenho experiência</span>
+                        <span class="opcao-desc">Já atuo na área profissionalmente</span>
+                    </div>
+                </label>
+                <label class="situacao-opcao">
+                    <input type="radio" name="situacao" value="cursando">
+                    <div class="opcao-texto">
+                        <span class="opcao-titulo">🎓 Cursando faculdade</span>
+                        <span class="opcao-desc">Ainda estou me formando na área</span>
+                    </div>
+                </label>
+                <label class="situacao-opcao">
+                    <input type="radio" name="situacao" value="sem_experiencia">
+                    <div class="opcao-texto">
+                        <span class="opcao-titulo">🌱 Sem experiência ainda</span>
+                        <span class="opcao-desc">Quero dar meus primeiros passos</span>
+                    </div>
+                </label>
+            </div>
+
+            <p class="secao">Currículo</p>
+
+            <label>Anexar currículo (PDF)</label>
+            <input type="file" name="curriculo" accept=".pdf">
+
+            <p class="secao">Termos e autorizações</p>
+
+            <div class="check-group">
+                <input type="checkbox" name="termo_dados" required>
+                <label>Autorizo o uso dos meus dados pessoais para fins de contato e seleção, conforme a LGPD (Lei nº 13.709/2018).</label>
+            </div>
+            <div class="check-group">
+                <input type="checkbox" name="termo_imagem" required>
+                <label>Autorizo o uso da minha imagem e informações profissionais para divulgação na plataforma.</label>
+            </div>
+            <div class="check-group">
+                <input type="checkbox" name="termo_veracidade" required>
+                <label>Declaro que todas as informações fornecidas são verdadeiras.</label>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Freelancers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d97706;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 { color: white; font-size: 28px; margin-bottom: 10px; }
+        p { color: white; margin-bottom: 40px; font-size: 16px; }
+        .botoes { display: flex; gap: 20px; }
+        .btn {
+            padding: 16px 32px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-freela {
+            background-color: white;
+            color: #d97706;
+        }
+        .btn-empresa {
+            background-color: #92400e;
+            color: white;
+        }
+        .btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <img src="/static/logo.png" alt="Logo" style="width: 400px; margin-bottom: 40px;">
+    <h1>👋 Bem-vindo ao banco de Freelancers!</h1>
+    <p>Como você quer continuar?</p>
+    <div class="botoes">
+        <a class="btn btn-freela" href="/cadastro">Sou Freelancer</a>
+        <a class="btn btn-empresa" href="/login">Sou sócio SIDEC</a>
+    </div>
+</body>
+</html>

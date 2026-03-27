@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Avaliar Freelancer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d97706;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        h1 { color: white; margin-bottom: 20px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .nome-freela {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .profissao {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 6px;
+        }
+        .badge-novo {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .badge-reavaliacao {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+        .score-atual {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        label { font-size: 14px; color: #555; }
+        .slider-wrap { margin: 10px 0 10px; }
+        input[type=range] {
+            width: 100%;
+            accent-color: #d97706;
+        }
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+        .nota-display {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d97706;
+            margin: 10px 0 4px;
+            text-align: center;
+        }
+        .nota-label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .estrelas-wrap {
+            display: flex;
+            gap: 6px;
+            font-size: 36px;
+            margin: 6px 0 20px;
+            justify-content: center;
+        }
+        .estrela { color: #ddd; }
+        .estrela.cheia { color: #d97706; }
+        .estrela.meia {
+            background: linear-gradient(to right, #d97706 50%, #ddd 50%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            height: 100px;
+            resize: none;
+        }
+        .btn-enviar {
+            width: 100%;
+            padding: 12px;
+            background-color: #d97706;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-enviar:hover { background-color: #b45309; }
+        .voltar {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .sucesso {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <a class="voltar" href="/buscar">← Voltar</a>
+    <h1>⭐ Avaliar Freelancer</h1>
+    <div class="card">
+        {% if sucesso %}
+        <p class="sucesso">✅ Avaliação enviada! Score atualizado.</p>
+        {% endif %}
+
+        <p class="nome-freela">{{ freelancer[1] }}</p>
+        <p class="profissao">{{ freelancer[2] }} — {{ freelancer[3] }}</p>
+
+        {% if freelancer[6] == 5.0 and avaliacoes == 0 %}
+        <span class="badge-novo">🆕 Profissional novo — sem avaliações ainda</span>
+        {% else %}
+        <span class="badge-reavaliacao">🔄 Reavaliar profissional</span>
+        <p class="score-atual">Score atual: {{ freelancer[6] }} — {{ avaliacoes }} avaliação(ões)</p>
+        {% endif %}
+
+        <hr class="divider">
+
+        <form action="/avaliar/{{ freelancer[0] }}" method="POST">
+            <label>Nota (0 a 10)</label>
+            <div class="slider-wrap">
+                <input type="range" min="0" max="10" value="0" step="1" id="slider" name="nota">
+                <div class="range-labels"><span>0</span><span>5</span><span>10</span></div>
+            </div>
+
+            <div class="nota-display" id="nota-display">0</div>
+            <div class="nota-label" id="nota-label">Sem avaliação</div>
+            <div class="estrelas-wrap" id="estrelas">
+                <span class="estrela" id="s1">★</span>
+                <span class="estrela" id="s2">★</span>
+                <span class="estrela" id="s3">★</span>
+                <span class="estrela" id="s4">★</span>
+                <span class="estrela" id="s5">★</span>
+            </div>
+
+            <label>Comentário</label>
+            <textarea name="comentario" placeholder="Conte como foi a experiência..."></textarea>
+
+            <button class="btn-enviar" type="submit">Enviar avaliação</button>
+        </form>
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const display = document.getElementById('nota-display');
+        const label = document.getElementById('nota-label');
+        const estrelas = [
+            document.getElementById('s1'),
+            document.getElementById('s2'),
+            document.getElementById('s3'),
+            document.getElementById('s4'),
+            document.getElementById('s5')
+        ];
+
+        function atualizar(val) {
+            val = parseInt(val);
+            display.textContent = val;
+            if (val === 0) {
+                label.textContent = 'Sem avaliação';
+                estrelas.forEach(e => e.className = 'estrela');
+                return;
+            }
+            const meias = val / 2;
+            const cheias = Math.floor(meias);
+            const temMeia = meias % 1 !== 0;
+            estrelas.forEach((e, i) => {
+                e.className = 'estrela';
+                if (i < cheias) e.classList.add('cheia');
+                else if (i === cheias && temMeia) e.classList.add('meia');
+            });
+            label.textContent = meias.toFixed(1) + ' estrelas';
+        }
+
+        slider.addEventListener('input', e => atualizar(e.target.value));
+        atualizar(0);
+    </script>
+</body>
+</html>

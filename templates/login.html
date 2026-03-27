@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d97706;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 { color: white; margin-bottom: 30px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 350px;
+        }
+        label { font-size: 14px; color: #333; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #d97706;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #b45309; }
+        .erro { color: red; font-size: 13px; margin-bottom: 10px; }
+        .voltar {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <a class="voltar" href="/">← Voltar</a>
+    <h1>🔐 Acesso Sócios</h1>
+    <div class="card">
+        {% if erro %}
+        <p class="erro">{{ erro }}</p>
+        {% endif %}
+        <form action="/login" method="POST">
+            <label>Usuário</label>
+            <input type="text" name="usuario" required>
+            <label>Senha</label>
+            <input type="password" name="senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>
