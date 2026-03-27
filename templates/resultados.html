@@ -2,254 +2,226 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Resultados</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Freelancer</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
             background-color: #d97706;
-            padding: 30px;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        .topo {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 24px;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
-        h1 { color: white; margin: 0; font-size: 22px; }
-        .logout {
-            background: #92400e;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .logout:hover { background: #78350f; }
-        .busca {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        input[type=text] {
-            padding: 10px;
-            flex: 1;
-            border-radius: 8px;
-            border: none;
-            font-size: 15px;
-        }
-        .btn-buscar {
-            padding: 10px 20px;
-            background: #92400e;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            cursor: pointer;
-        }
-        .btn-buscar:hover { background: #78350f; }
-        .mensagem {
-            background: #d1fae5;
-            color: #065f46;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
+        h1 { color: white; margin-bottom: 20px; font-size: clamp(20px, 5vw, 28px); }
         .card {
             background: white;
             border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 15px;
+            padding: clamp(20px, 5vw, 30px);
+            width: 100%;
+            max-width: 420px;
         }
-        .card-topo {
+        .secao {
+            font-size: 12px;
+            font-weight: bold;
+            color: #d97706;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 20px 0 10px;
+            padding-top: 16px;
+            border-top: 1px solid #f3f4f6;
+        }
+        .secao:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        label { font-size: 14px; color: #555; display: block; margin-bottom: 4px; }
+        input[type=text],
+        input[type=email],
+        input[type=file],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #333;
+        }
+        input[type=file] { padding: 8px; }
+        .situacao-grupo {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            flex-direction: column;
             gap: 10px;
+            margin-bottom: 14px;
         }
-        .card-info { flex: 1; }
-        .nome {
-            font-size: 17px;
+        .situacao-opcao {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .situacao-opcao:hover {
+            border-color: #d97706;
+            background: #fffbeb;
+        }
+        .situacao-opcao input[type=radio] {
+            width: auto;
+            margin: 0;
+            padding: 0;
+            accent-color: #d97706;
+            min-width: 18px;
+            min-height: 18px;
+        }
+        .opcao-titulo {
+            font-size: 14px;
             font-weight: bold;
             color: #333;
         }
-        .info {
-            color: #666;
-            font-size: 14px;
-            margin-top: 4px;
+        .opcao-desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
         }
-        .badge-situacao {
-            display: inline-block;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 20px;
+        .check-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        .check-group input[type=checkbox] {
+            width: auto;
+            min-width: 18px;
+            min-height: 18px;
+            margin: 3px 0 0;
+            accent-color: #d97706;
+        }
+        .check-group label {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #d97706;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
             margin-top: 6px;
         }
-        .experiente { background: #d1fae5; color: #065f46; }
-        .cursando { background: #dbeafe; color: #1e40af; }
-        .sem_experiencia { background: #fef3c7; color: #92400e; }
-        .card-acoes {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-        }
-        .btn-curriculo {
-            display: inline-block;
-            padding: 7px 14px;
-            background: #1d4ed8;
+        button:hover { background-color: #b45309; }
+        .voltar {
             color: white;
-            border-radius: 8px;
-            font-size: 13px;
             text-decoration: none;
-            white-space: nowrap;
-        }
-        .btn-curriculo:hover { background: #1e40af; }
-        .btn-sem-curriculo {
+            margin-bottom: 20px;
             display: inline-block;
-            padding: 7px 14px;
-            background: #e5e7eb;
-            color: #9ca3af;
-            border-radius: 8px;
-            font-size: 13px;
-            white-space: nowrap;
+            font-size: 15px;
         }
-        .btn-convocar {
-            display: inline-block;
-            padding: 7px 14px;
-            background: #16a34a;
-            color: white;
-            border-radius: 8px;
-            font-size: 13px;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-        .btn-convocar:hover { background: #15803d; }
-        .btn-excluir {
-            display: inline-block;
-            padding: 7px 14px;
-            background: #dc2626;
-            color: white;
-            border-radius: 8px;
-            font-size: 13px;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-        .btn-excluir:hover { background: #b91c1c; }
-        .card-rodape {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .score { font-size: 20px; color: #d97706; }
-        .score-num {
-            font-size: 13px;
-            color: #888;
-            margin-left: 4px;
-        }
-        .badge-novo {
-            display: inline-block;
+        .sucesso {
             background: #d1fae5;
             color: #065f46;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 20px;
-        }
-        .btn-avaliar {
-            display: inline-block;
-            padding: 7px 16px;
-            background: #d97706;
-            color: white;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 13px;
-            text-decoration: none;
-        }
-        .btn-avaliar:hover { background: #b45309; }
-        .btn-reavaliar {
-            display: inline-block;
-            padding: 7px 16px;
-            background: #92400e;
-            color: white;
-            border-radius: 8px;
-            font-size: 13px;
-            text-decoration: none;
-        }
-        .btn-reavaliar:hover { background: #78350f; }
-        .vazio {
-            color: white;
-            font-size: 18px;
+            margin-bottom: 16px;
+            font-size: 14px;
             text-align: center;
-            margin-top: 40px;
         }
     </style>
 </head>
 <body>
-    <div class="topo">
-        <h1>🔍 Buscar Freelancer</h1>
-        <a class="logout" href="/logout">Sair</a>
-    </div>
+    <a class="voltar" href="/">← Voltar</a>
+    <h1>📋 Cadastro de Freelancer</h1>
+    <div class="card">
+        {% if sucesso %}
+        <p class="sucesso">✅ Cadastro realizado com sucesso!</p>
+        {% endif %}
 
-    <form class="busca" action="/buscar" method="GET">
-        <input type="text" name="profissao" placeholder="Ex: Nutricionista, Personal..." value="{{ profissao }}">
-        <button class="btn-buscar" type="submit">Buscar</button>
-    </form>
+        <form action="/cadastrar" method="POST" enctype="multipart/form-data">
 
-    {% if mensagem %}
-    <div class="mensagem">✅ {{ mensagem }}</div>
-    {% endif %}
+            <p class="secao">Dados pessoais</p>
 
-    {% if resultados %}
-        {% for r in resultados %}
-        <div class="card">
-            <div class="card-topo">
-                <div class="card-info">
-                    <div class="nome">{{ r[0] }}</div>
-                    <div class="info">{{ r[1] }} — {{ r[2] }}</div>
-                    <div class="info">📞 {{ r[3] }}</div>
-                    {% if r[7] == 'experiente' %}
-                        <span class="badge-situacao experiente">✅ Com experiência</span>
-                    {% elif r[7] == 'cursando' %}
-                        <span class="badge-situacao cursando">🎓 Cursando</span>
-                    {% elif r[7] == 'sem_experiencia' %}
-                        <span class="badge-situacao sem_experiencia">🌱 Sem experiência</span>
-                    {% endif %}
-                </div>
-                <div class="card-acoes">
-                    {% if r[6] %}
-                    <a class="btn-curriculo" href="/static/curriculos/{{ r[6] }}" target="_blank">📄 Currículo</a>
-                    {% else %}
-                    <span class="btn-sem-curriculo">📄 Sem currículo</span>
-                    {% endif %}
-                    <a class="btn-convocar" href="/convocar/{{ r[5] }}">✉️ Convocar</a>
-                    <a class="btn-excluir" href="/excluir/{{ r[5] }}" onclick="return confirm('Tem certeza que deseja excluir {{ r[0] }}?')">🗑️ Excluir</a>
-                </div>
-            </div>
+            <label>Nome completo</label>
+            <input type="text" name="nome" placeholder="Ex: Ana Lima" required>
 
-            <div class="card-rodape">
-                {% if r[4] == 5.0 %}
-                    <span class="badge-novo">🆕 Sem avaliações ainda</span>
-                    <a class="btn-avaliar" href="/avaliar/{{ r[5] }}">⭐ Avaliar</a>
-                {% else %}
-                    <div class="score">
-                        {% set meias = r[4] / 2 %}
-                        {% set cheias = meias | int %}
-                        {% for i in range(cheias) %}★{% endfor %}
-                        {% if meias - cheias >= 0.5 %}½{% endif %}
-                        <span class="score-num">({{ r[4] }})</span>
+            <label>Profissão</label>
+            <select name="profissao" required>
+                <option value="" disabled selected>Selecione...</option>
+                <option>Nutricionista</option>
+                <option>Personal Trainer</option>
+                <option>Fisioterapeuta</option>
+                <option>Psicólogo</option>
+                <option>Enfermeiro</option>
+                <option>Cuidador de Idosos</option>
+            </select>
+
+            <label>Cidade</label>
+            <input type="text" name="cidade" placeholder="Ex: Niterói" required>
+
+            <label>Telefone / WhatsApp</label>
+            <input type="text" name="telefone" placeholder="Ex: 11999990001" required>
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Ex: ana@email.com" required>
+
+            <p class="secao">Situação profissional</p>
+
+            <div class="situacao-grupo">
+                <label class="situacao-opcao">
+                    <input type="radio" name="situacao" value="experiente" required>
+                    <div class="opcao-texto">
+                        <span class="opcao-titulo">✅ Tenho experiência</span>
+                        <span class="opcao-desc">Já atuo na área profissionalmente</span>
                     </div>
-                    <a class="btn-reavaliar" href="/avaliar/{{ r[5] }}">🔄 Reavaliar</a>
-                {% endif %}
+                </label>
+                <label class="situacao-opcao">
+                    <input type="radio" name="situacao" value="cursando">
+                    <div class="opcao-texto">
+                        <span class="opcao-titulo">🎓 Cursando faculdade</span>
+                        <span class="opcao-desc">Ainda estou me formando na área</span>
+                    </div>
+                </label>
+                <label class="situacao-opcao">
+                    <input type="radio" name="situacao" value="sem_experiencia">
+                    <div class="opcao-texto">
+                        <span class="opcao-titulo">🌱 Sem experiência ainda</span>
+                        <span class="opcao-desc">Quero dar meus primeiros passos</span>
+                    </div>
+                </label>
             </div>
-        </div>
-        {% endfor %}
-    {% else %}
-        <p class="vazio">Nenhum freelancer encontrado.</p>
-    {% endif %}
+
+            <p class="secao">Currículo</p>
+
+            <label>Anexar currículo (PDF)</label>
+            <input type="file" name="curriculo" accept=".pdf">
+
+            <p class="secao">Termos e autorizações</p>
+
+            <div class="check-group">
+                <input type="checkbox" name="termo_dados" required>
+                <label>Autorizo o uso dos meus dados pessoais para fins de contato e seleção, conforme a LGPD (Lei nº 13.709/2018).</label>
+            </div>
+            <div class="check-group">
+                <input type="checkbox" name="termo_imagem" required>
+                <label>Autorizo o uso da minha imagem e informações profissionais para divulgação na plataforma.</label>
+            </div>
+            <div class="check-group">
+                <input type="checkbox" name="termo_veracidade" required>
+                <label>Declaro que todas as informações fornecidas são verdadeiras.</label>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
 </body>
 </html>
