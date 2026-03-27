@@ -2,8 +2,10 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Freelancer</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
             background-color: #d97706;
@@ -13,14 +15,13 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            padding: 30px;
-            box-sizing: border-box;
+            padding: 20px;
         }
-        h1 { color: white; margin-bottom: 20px; }
+        h1 { color: white; margin-bottom: 20px; font-size: clamp(20px, 5vw, 28px); }
         .card {
             background: white;
             border-radius: 10px;
-            padding: 30px;
+            padding: clamp(20px, 5vw, 30px);
             width: 100%;
             max-width: 420px;
         }
@@ -41,12 +42,11 @@
         input[type=file],
         select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 14px;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            font-size: 15px;
-            box-sizing: border-box;
+            font-size: 16px;
             color: #333;
         }
         input[type=file] { padding: 8px; }
@@ -64,7 +64,6 @@
             border: 1.5px solid #e5e7eb;
             border-radius: 8px;
             cursor: pointer;
-            transition: border-color 0.2s, background 0.2s;
         }
         .situacao-opcao:hover {
             border-color: #d97706;
@@ -75,10 +74,8 @@
             margin: 0;
             padding: 0;
             accent-color: #d97706;
-        }
-        .situacao-opcao .opcao-texto {
-            display: flex;
-            flex-direction: column;
+            min-width: 18px;
+            min-height: 18px;
         }
         .opcao-titulo {
             font-size: 14px;
@@ -101,6 +98,8 @@
         }
         .check-group input[type=checkbox] {
             width: auto;
+            min-width: 18px;
+            min-height: 18px;
             margin: 3px 0 0;
             accent-color: #d97706;
         }
@@ -112,7 +111,7 @@
         }
         button {
             width: 100%;
-            padding: 13px;
+            padding: 14px;
             background-color: #d97706;
             color: white;
             border: none;
@@ -127,6 +126,7 @@
             text-decoration: none;
             margin-bottom: 20px;
             display: inline-block;
+            font-size: 15px;
         }
         .sucesso {
             background: #d1fae5;
@@ -159,14 +159,14 @@
                 <option value="" disabled selected>Selecione...</option>
                 <option>Nutricionista</option>
                 <option>Personal Trainer</option>
+                <option>Fisioterapeuta</option>
                 <option>Psicólogo</option>
                 <option>Enfermeiro</option>
-                 <option>Bombeiro</option>
                 <option>Cuidador de Idosos</option>
             </select>
 
             <label>Cidade</label>
-            <input type="text" name="cidade" placeholder="Ex: São Paulo" required>
+            <input type="text" name="cidade" placeholder="Ex: Niterói" required>
 
             <label>Telefone / WhatsApp</label>
             <input type="text" name="telefone" placeholder="Ex: 11999990001" required>
