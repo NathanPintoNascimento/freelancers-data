@@ -2,8 +2,10 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliar Freelancer</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
             background-color: #d97706;
@@ -13,19 +15,22 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            padding: 30px;
-            box-sizing: border-box;
+            padding: 20px;
         }
-        h1 { color: white; margin-bottom: 20px; }
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: clamp(20px, 5vw, 26px);
+        }
         .card {
             background: white;
             border-radius: 10px;
-            padding: 30px;
+            padding: clamp(20px, 5vw, 30px);
             width: 100%;
             max-width: 400px;
         }
         .nome-freela {
-            font-size: 18px;
+            font-size: clamp(16px, 4vw, 18px);
             font-weight: bold;
             color: #333;
             margin-bottom: 4px;
@@ -58,28 +63,34 @@
             color: #888;
             margin-bottom: 20px;
         }
-        label { font-size: 14px; color: #555; }
+        label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 6px;
+        }
         .slider-wrap { margin: 10px 0 10px; }
         input[type=range] {
             width: 100%;
             accent-color: #d97706;
+            height: 6px;
         }
         .range-labels {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
             color: #aaa;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .nota-display {
-            font-size: 32px;
+            font-size: clamp(28px, 8vw, 36px);
             font-weight: bold;
             color: #d97706;
             margin: 10px 0 4px;
             text-align: center;
         }
         .nota-label {
-            font-size: 13px;
+            font-size: 14px;
             color: #888;
             margin-bottom: 6px;
             text-align: center;
@@ -87,7 +98,7 @@
         .estrelas-wrap {
             display: flex;
             gap: 6px;
-            font-size: 36px;
+            font-size: clamp(28px, 8vw, 36px);
             margin: 6px 0 20px;
             justify-content: center;
         }
@@ -101,18 +112,17 @@
         }
         textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 6px 0 16px;
-            border: 1px solid #ccc;
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
-            font-size: 15px;
-            box-sizing: border-box;
+            font-size: 16px;
             height: 100px;
             resize: none;
         }
         .btn-enviar {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background-color: #d97706;
             color: white;
             border: none;
@@ -126,11 +136,12 @@
             text-decoration: none;
             margin-bottom: 20px;
             display: inline-block;
+            font-size: 15px;
         }
         .sucesso {
             background: #d1fae5;
             color: #065f46;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             margin-bottom: 16px;
             font-size: 14px;
@@ -139,7 +150,7 @@
         .divider {
             border: none;
             border-top: 1px solid #eee;
-            margin: 20px 0;
+            margin: 16px 0;
         }
     </style>
 </head>
@@ -154,7 +165,7 @@
         <p class="nome-freela">{{ freelancer[1] }}</p>
         <p class="profissao">{{ freelancer[2] }} — {{ freelancer[3] }}</p>
 
-        {% if freelancer[6] == 5.0 and avaliacoes == 0 %}
+        {% if avaliacoes == 0 %}
         <span class="badge-novo">🆕 Profissional novo — sem avaliações ainda</span>
         {% else %}
         <span class="badge-reavaliacao">🔄 Reavaliar profissional</span>
