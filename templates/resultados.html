@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d97706;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        h1 { color: white; font-size: 20px; }
+        .topo-acoes { display: flex; gap: 8px; }
+        .btn-topo {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
+        .btn-logout { background: #78350f; }
+        .btn-topo:hover { opacity: 0.85; }
+        .busca {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .busca input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+        }
+        .busca button {
+            padding: 10px 20px;
+            background: #92400e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .busca button:hover { background: #78350f; }
+        .mensagem {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 14px;
+            width: 100%;
+        }
+        .card-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .card-info { flex: 1; }
+        .nome {
+            font-size: 17px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .info {
+            color: #666;
+            font-size: 14px;
+            margin-top: 3px;
+        }
+        .badge-situacao {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 6px;
+        }
+        .experiente { background: #d1fae5; color: #065f46; }
+        .cursando { background: #dbeafe; color: #1e40af; }
+        .sem_experiencia { background: #fef3c7; color: #92400e; }
+        .card-acoes {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .btn-card {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-decoration: none;
+            white-space: nowrap;
+            color: white;
+        }
+        .btn-curriculo { background: #1d4ed8; }
+        .btn-curriculo:hover { background: #1e40af; }
+        .btn-sem-curriculo {
+            display: inline-block;
+            padding: 7px 14px;
+            background: #e5e7eb;
+            color: #9ca3af;
+            border-radius: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .btn-convocar { background: #16a34a; }
+        .btn-convocar:hover { background: #15803d; }
+        .btn-excluir { background: #dc2626; }
+        .btn-excluir:hover { background: #b91c1c; }
+        .card-rodape {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            border-top: 1px solid #f3f4f6;
+        }
+        .score { font-size: 20px; color: #d97706; }
+        .score-num { font-size: 13px; color: #888; margin-left: 4px; }
+        .badge-novo {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .btn-avaliar { background: #d97706; }
+        .btn-avaliar:hover { background: #b45309; }
+        .btn-reavaliar { background: #92400e; }
+        .btn-reavaliar:hover { background: #78350f; }
+        .vazio {
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topo">
+        <h1>🔍 Buscar Freelancer</h1>
+        <div class="topo-acoes">
+            <a class="btn-topo btn-logout" href="/logout">Sair</a>
+        </div>
+    </div>
+
+    <form class="busca" action="/buscar" method="GET">
+        <input type="text" name="profissao" placeholder="Ex: Nutricionista, Personal..." value="{{ profissao }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if mensagem %}
+    <div class="mensagem">✅ {{ mensagem }}</div>
+    {% endif %}
+
+    {% if resultados %}
+        {% for r in resultados %}
+        <div class="card">
+            <div class="card-topo">
+                <div class="card-info">
+                    <div class="nome">{{ r[0] }}</div>
+                    <div class="info">{{ r[1] }} — {{ r[2] }}</div>
+                    <div class="info">📞 {{ r[3] }}</div>
+                    {% if r[7] == 'experiente' %}
+                        <span class="badge-situacao experiente">✅ Com experiência</span>
+                    {% elif r[7] == 'cursando' %}
+                        <span class="badge-situacao cursando">🎓 Cursando</span>
+                    {% elif r[7] == 'sem_experiencia' %}
+                        <span class="badge-situacao sem_experiencia">🌱 Sem experiência</span>
+                    {% endif %}
+                </div>
+                <div class="card-acoes">
+                    {% if r[6] %}
+                    <a class="btn-card btn-curriculo" href="/static/curriculos/{{ r[6] }}" target="_blank">📄 Currículo</a>
+                    {% else %}
+                    <span class="btn-sem-curriculo">📄 Sem currículo</span>
+                    {% endif %}
+                    <a class="btn-card btn-convocar" href="/convocar/{{ r[5] }}">✉️ Convocar</a>
+                    <a class="btn-card btn-excluir" href="/excluir/{{ r[5] }}" onclick="return confirm('Excluir {{ r[0] }}?')">🗑️ Excluir</a>
+                </div>
+            </div>
+
+            <div class="card-rodape">
+                {% if r[4] == 5.0 %}
+                    <span class="badge-novo">🆕 Sem avaliações ainda</span>
+                    <a class="btn-card btn-avaliar" href="/avaliar/{{ r[5] }}">⭐ Avaliar</a>
+                {% else %}
+                    <div class="score">
+                        {% set meias = r[4] / 2 %}
+                        {% set cheias = meias | int %}
+                        {% for i in range(cheias) %}★{% endfor %}
+                        {% if meias - cheias >= 0.5 %}½{% endif %}
+                        <span class="score-num">({{ r[4] }})</span>
+                    </div>
+                    <a class="btn-card btn-reavaliar" href="/avaliar/{{ r[5] }}">🔄 Reavaliar</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="vazio">Nenhum freelancer encontrado.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidec Corporate</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        /* Tela de carregamento */
+        #loading {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #d97706;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        #loading img {
+            width: 200px;
+            margin-bottom: 30px;
+        }
+        .loading-texto {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .loading-bar-inner {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            animation: carregar 2s ease-in-out infinite;
+        }
+        @keyframes carregar {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* Conteúdo principal — escondido até carregar */
+        #conteudo {
+            display: none;
+            font-family: Arial, sans-serif;
+            background-color: #d97706;
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .logo {
+            width: clamp(140px, 40vw, 220px);
+            margin-bottom: 24px;
+        }
+        h1 {
+            color: white;
+            font-size: clamp(18px, 5vw, 26px);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        p {
+            color: white;
+            margin-bottom: 36px;
+            font-size: clamp(14px, 3.5vw, 16px);
+            text-align: center;
+        }
+        .botoes {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .btn {
+            padding: 16px 28px;
+            font-size: clamp(14px, 4vw, 16px);
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+        }
+        .btn-freela { background-color: white; color: #d97706; }
+        .btn-empresa { background-color: #92400e; color: white; }
+        .btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <!-- Tela de carregamento -->
+    <div id="loading">
+        <img src="/static/logo.png" alt="Sidec Corporate">
+        <p class="loading-texto">Carregando a plataforma...</p>
+        <div class="loading-bar">
+            <div class="loading-bar-inner"></div>
+        </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div id="conteudo">
+        <img class="logo" src="/static/logo.png" alt="Sidec Corporate">
+        <h1>👋 Bem-vindo!</h1>
+        <p>Como você quer continuar?</p>
+        <div class="botoes">
+            <a class="btn btn-freela" href="/cadastro">Sou Freelancer</a>
+            <a class="btn btn-empresa" href="/login">Sou Empresa</a>
+        </div>
+    </div>
+
+    <script>
+        // Esconde a tela de carregamento quando a página estiver pronta
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loading = document.getElementById('loading');
+                const conteudo = document.getElementById('conteudo');
+                loading.style.opacity = '0';
+                setTimeout(function() {
+                    loading.style.display = 'none';
+                    conteudo.style.display = 'flex';
+                }, 500);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
